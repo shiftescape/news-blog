@@ -21,7 +21,6 @@ async function createIndex(index) {
     console.log(`Created index ${index}`);
   } catch (err) {
     console.error(`An error occurred while creating the index ${index}:`);
-    console.error(err);
   }
 }
 
@@ -38,10 +37,14 @@ async function setUsersMapping() {
       },
       password: {
         type: "text"
+      },
+      created_at: {
+        type: "date",
+        format: "epoch_millis"
       }
     };
 
-    await esclient.indices.putMapping({ index: FIELDS.index, type: FIELDS.userType, body: { properties: schema }});
+    await esclient.indices.putMapping({ index: FIELDS.index, body: { properties: schema }});
     console.log("Users mapping created successfully");
 
   } catch (err) {
@@ -68,11 +71,11 @@ async function setNewsMapping() {
         type: "text"
       },
       created_at: {
-        type: "date"
+        type: "date",
+        format: "epoch_millis"
       }
     };
-
-    await esclient.indices.putMapping({ index: FIELDS.index, type: FIELDS.newsType, body: { properties: schema }});
+    await esclient.indices.putMapping({ index: FIELDS.index, body: { properties: schema }});
     console.log("News mapping created successfully");
 
   } catch (err) {

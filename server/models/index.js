@@ -1,11 +1,11 @@
 const { esclient, FIELDS } = require('../elastic');
 
-async function getUser(username, password) {
+async function getUser(id) {
   const query = {
     query: {
       bool: {
         must: {
-          term: { username, password }
+          term: { _id: id }
         }
       }
     }
@@ -14,7 +14,6 @@ async function getUser(username, password) {
   const { body: { hits } } = await esclient.search({
     size: 1,
     index: FIELDS.index,
-    type: FIELDS.userType,
     body: query
   });
 
@@ -33,20 +32,28 @@ async function getUser(username, password) {
 }
 
 async function getNews(req) {
-  const query = {
+
+  let query = {
     query: {
       multi_match: {
-        query: req.text,
+        query: req.text || '',
         fields: ['title', 'content']
       }
     }
   };
 
+  if (!req.text) {
+    query = {
+      query: {
+        match_all: {}
+      }
+    };
+  }
+
   const { body: { hits } } = await esclient.search({
     from: req.page || 0,
     size: req.limit || 100,
     index: FIELDS.index,
-    type: FIELDS.newsType,
     body: query
   });
 
@@ -66,21 +73,32 @@ async function getNews(req) {
   return { results, values }
 }
 
-async function insertNews(title, content, created_by) {
+async function createUser(username, password) {
   return esclient.index({
     index: FIELDS.index,
-    type: FIELDS.newsType,
+    body: {
+      username,
+      password,
+      created_at: (new Date()).getTime()
+    }
+  })
+}
+
+async function createNews(title, content, created_by) {
+  return esclient.index({
+    index: FIELDS.index,
     body: {
       title,
       content,
       created_by,
-      created_at: new Date()
+      created_at: (new Date()).getTime()
     }
   })
 }
 
 module.exports = {
   getUser,
+  createUser,
   getNews,
-  insertNews
+  createNews
 }
