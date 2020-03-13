@@ -1,14 +1,8 @@
-const { Client } = require("@elastic/elasticsearch");
-require("dotenv").config();
-const elasticUrl = process.env.ELASTIC_URL || "http://localhost:9200";
+require('dotenv').config();
+const { Client } = require('@elastic/elasticsearch');
+const elasticUrl = process.env.ELASTIC_URL || 'http://localhost:9200';
 const esclient = new Client({ node: elasticUrl });
-
-// FIELDS
-const FIELDS = {
-  index: 'newsblog',
-  userType: 'users',
-  newsType: 'news',
-};
+const FIELDS = { index: 'newsblog' };
 
 /**
  * @function createIndex
@@ -20,12 +14,12 @@ async function createIndex(index) {
     await esclient.indices.create({ index });
     console.log(`Created index ${index}`);
   } catch (err) {
-    console.error(`An error occurred while creating the index ${index}:`);
+    console.error(`An error occurred while creating the index: ${index}`);
   }
 }
 
 /**
- * @function setUsersMapping,
+ * @function setUsersMapping
  * @returns {void}
  * @description Sets the users mapping to the database.
  */
@@ -33,28 +27,28 @@ async function setUsersMapping() {
   try {
     const schema = {
       username: {
-        type: "text"
+        type: 'text'
       },
       password: {
-        type: "text"
+        type: 'text'
       },
       created_at: {
-        type: "date",
-        format: "epoch_millis"
+        type: 'date',
+        format: 'epoch_millis'
       }
     };
 
     await esclient.indices.putMapping({ index: FIELDS.index, body: { properties: schema }});
-    console.log("Users mapping created successfully");
+    console.log('Users mapping created successfully');
 
   } catch (err) {
-    console.error("An error occurred while setting the users mapping: ");
+    console.error('An error occurred while setting the users mapping: ');
     console.error(err);
   }
 }
 
 /**
- * @function setNewsMapping,
+ * @function setNewsMapping
  * @returns {void}
  * @description Sets the news mapping to the database.
  */
@@ -62,25 +56,24 @@ async function setNewsMapping() {
   try {
     const schema = {
       title: {
-        type: "text"
+        type: 'text'
       },
       content: {
-        type: "text"
+        type: 'text'
       },
       created_by: {
-        type: "text"
+        type: 'text'
       },
       created_at: {
-        type: "date",
-        format: "epoch_millis"
+        type: 'date',
+        format: 'epoch_millis'
       }
     };
     await esclient.indices.putMapping({ index: FIELDS.index, body: { properties: schema }});
-    console.log("News mapping created successfully");
+    console.log('News mapping created successfully');
 
   } catch (err) {
-    console.error("An error occurred while setting the news mapping:");
-    console.error(err);
+    console.error(`An error occurred while setting the news mapping: ${err}`);
   }
 }
 
@@ -91,12 +84,12 @@ async function setNewsMapping() {
  */
 function checkConnection() {
   return new Promise(async (resolve) => {
-    console.log("Checking connection to ElasticSearch...");
+    console.log('Checking connection to ES...');
     let isConnected = false;
     while (!isConnected) {
       try {
         await esclient.cluster.health({});
-        console.log("Successfully connected to ElasticSearch");
+        console.log('Successfully connected to ES!');
         isConnected = true;
         // eslint-disable-next-line no-empty
       } catch (_) {
@@ -108,9 +101,9 @@ function checkConnection() {
 
 module.exports = {
   esclient,
+  FIELDS,
   setUsersMapping,
   setNewsMapping,
   checkConnection,
-  createIndex,
-  FIELDS
+  createIndex
 };

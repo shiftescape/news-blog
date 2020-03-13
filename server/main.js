@@ -1,6 +1,6 @@
-const elastic = require("./elastic");
-const server = require("./index.js");
-require("dotenv").config();
+const elastic = require('./elastic');
+const server = require('./index.js');
+require('dotenv').config();
 
 (async function main() {
   const isElasticReady = await elastic.checkConnection();

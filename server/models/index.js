@@ -1,5 +1,10 @@
 const { esclient, FIELDS } = require('../elastic');
 
+/**
+ * @function getUser
+ * @returns { results<Object>, values<Object> }
+ * @description Get user data based on _id
+ */
 async function getUser(id) {
   const query = {
     query: {
@@ -31,6 +36,11 @@ async function getUser(id) {
   return { results, values }
 }
 
+/**
+ * @function getNews
+ * @returns { results<Object>, values<Object> }
+ * @description Get all news or filtered one
+ */
 async function getNews(req) {
 
   let query = {
@@ -73,6 +83,11 @@ async function getNews(req) {
   return { results, values }
 }
 
+/**
+ * @function createUser
+ * @returns { esclient<ESObject> }
+ * @description Create user data by username and password
+ */
 async function createUser(username, password) {
   return esclient.index({
     index: FIELDS.index,
@@ -84,6 +99,11 @@ async function createUser(username, password) {
   })
 }
 
+/**
+ * @function createNews
+ * @returns { esclient<ESObject> }
+ * @description Create news data by title and content
+ */
 async function createNews(title, content, created_by) {
   return esclient.index({
     index: FIELDS.index,
