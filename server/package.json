@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "pm2 start ./main.js --name node_app && pm2 log",
+    "stop": "pm2 stop node_app "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.6.0",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.4"
   }
