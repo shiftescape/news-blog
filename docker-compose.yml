@@ -1,10 +1,11 @@
 version: '3.6'
 services:
   client:
+    image: node:carbon
     container_name: newsblog-client
     build: ./client
     ports:
-      - "4200:4200"
+      - 4200:4200
   api:
     image: node:10.15.3-alpine
     container_name: newsblog-api

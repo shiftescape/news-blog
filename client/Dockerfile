@@ -8,11 +8,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install any needed packages
-RUN npm i
+RUN npm install --unsafe-perm
 
 # Bundle app source
 COPY . ./
 
 EXPOSE 4200
 
-CMD [ "npm", "start" ]
+CMD npm run start
