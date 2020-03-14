@@ -1,3 +1,17 @@
 <div id="news-wrapper">
-  NEWS LIST
+  <div id="search-news">
+    <input type="text" placeholder="Search Dubai News...">
+  </div>
+  <br>
+  <div ng-if="isEmptyNews">No news created yet. Try again later.</div>
+  <div class="news-single" ng-repeat="news in allNews track by $index">
+    <div class="content-wrapper">
+      <div class="title">{{ news.title }}</div>
+      <div class="created">Published: {{ parseDate(news.created_at) }}</div>
+      <div class="content">{{ news.content }}</div>
+      <div class="author">
+        AUTHOR: {{ news.created_by }}
+      </div>
+    </div>
+  </div>
 </div>

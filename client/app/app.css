@@ -1,5 +1,10 @@
 /* app css stylesheet */
 
+html {
+  height: 100vh;
+  background: #f9f9f9;
+}
+
 header {
   background: #001627;
   text-align: center;
@@ -35,3 +40,60 @@ header {
   margin: 0 auto;
   padding: 20px 0;
 }
+
+#news-wrapper .news-single {
+  background: #FFF;
+  margin-bottom: 0.5em;
+  padding: 15px;
+  border: 1px solid #f1f1f1;
+}
+
+#news-wrapper .news-single .img, #news-wrapper .news-single .content-wrapper {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#news-wrapper .news-single .img > img {
+  width: 60px;
+}
+
+#news-wrapper .news-single .content-wrapper {
+  margin-left: 5px;
+}
+
+#news-wrapper .news-single .content-wrapper > .title {
+  font-weight: bold;
+  color: orange;
+}
+
+#news-wrapper .news-single .content-wrapper > .content {
+  margin: 15px 0;
+  text-align: justify;
+}
+
+#news-wrapper .news-single .content-wrapper > .created {
+  font-size: 0.8rem;
+  color: #9e9e9e;
+}
+
+#news-wrapper .news-single .content-wrapper > .author {
+  font-size: 0.6rem;
+  background: #DDD;
+  display: inline-block;
+  padding: 2px 5px;
+}
+
+#search-news{
+  position: relative;
+}
+
+#search-news input {
+  padding: 5px 15px;
+  font-size: 2rem;
+  outline: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  color: #4c4c4c;
+}
+
