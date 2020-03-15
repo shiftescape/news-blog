@@ -47,7 +47,7 @@ async function getNews(req) {
     query: {
       multi_match: {
         query: req.text || '',
-        fields: ['title', 'content']
+        fields: ['title', 'content', 'created_by']
       }
     }
   };
@@ -55,7 +55,10 @@ async function getNews(req) {
   if (!req.text) {
     query = {
       query: {
-        match_all: {}
+        match_all: {},
+      },
+      sort: {
+        created_at: { 'order': 'desc' }
       }
     };
   }

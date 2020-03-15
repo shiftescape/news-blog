@@ -97,3 +97,21 @@ header {
   color: #4c4c4c;
 }
 
+.dangerStyle {
+  background: #e74c3c;
+  color: #FFF;
+  padding: 8px 15px;
+  border: 1px solid #e43d2c;
+}
+
+.emptyStyle {
+  background: #3498db;
+  color: #FFF;
+  padding: 8px 15px;
+  border: 1px solid #208fda;
+}
+
+.loader {
+  text-align: center;
+  margin-bottom: 10px;
+}

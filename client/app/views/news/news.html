@@ -1,9 +1,13 @@
 <div id="news-wrapper">
   <div id="search-news">
-    <input type="text" placeholder="Search Dubai News...">
+    {{ }}
+    <input type="text" placeholder="Search Dubai News..." ng-model="searchText" ng-keyup="filterNews(searchText)">
   </div>
   <br>
-  <div ng-if="isEmptyNews">No news created yet. Try again later.</div>
+  <div ng-show="isLoading" class="loader"><img src="../../assets/img/loader.gif" alt=""></div>
+  <div ng-if="isEmptyNews" class="emptyStyle">Your search text "{{ searchText }}" returned an empty result. Please try another keyword.</div>
+  <div ng-if="isErrorNews" class="dangerStyle">Unexpected error occured. Please try again some time.</div>
+  <div ng-if="isEmptyNews && initLoad" class="dangerStyle">No news posted as of the moment. Please try again some time.</div>
   <div class="news-single" ng-repeat="news in allNews track by $index">
     <div class="content-wrapper">
       <div class="title">{{ news.title }}</div>
