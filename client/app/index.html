@@ -15,11 +15,12 @@
   <script src="lib/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <header>
+  <header ng-controller="MainCtrl">
     <ul class="menu">
       <li><a href="#!/news">Home</a></li>
-      <li><a href="#!/news/create">Post a News</a></li>
-      <li><a href="#!/news/create">Logout</a></li>
+      <li ng-if="isLoggedIn"><a href="#!/news/create">Create News</a></li>
+      <li ng-if="!isLoggedIn"><a href="#!/login">Login</a></li>
+      <li ng-if="isLoggedIn"><a href="#" ng-click="logoutUser()">Logout</a></li>
     </ul>
   </header>
 
@@ -36,6 +37,9 @@
   <script src="lib/angular-route/angular-route.js"></script>
   <script src="./app.js"></script>
   <script src="./services/news.service.js"></script>
+  <script src="./services/auth.service.js"></script>
+  <script src="./controllers/MainCtrl.js"></script>
+  <script src="./controllers/LoginCtrl.js"></script>
   <script src="./controllers/NewsCtrl.js"></script>
   <script src="./controllers/CreateNewsCtrl.js"></script>
   <script src="./config.js"></script>

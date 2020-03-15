@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const newsRoute = require('./routes/news');
 const userRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 require('dotenv').config();
 
 const app = express();
@@ -12,6 +13,7 @@ function start() {
   return app.use(cors())
     .use(bodyParser.urlencoded({ extended: false }))
     .use(bodyParser.json())
+    .use('/auth', authRoute)
     .use('/news', newsRoute)
     .use('/users', userRoute)
     .use((_req, res) => res.status(200).json({ success: true, version: '1.0' }))

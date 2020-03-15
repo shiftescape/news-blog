@@ -1,0 +1,15 @@
+<div id="login-wrapper">
+    <div id="login-box">
+        <h2>User Login</h2>
+        <div ng-if="unauthorized">Unauthorized access. Try again.</div>
+        <div>
+            <input type="text" placeholder="Username" ng-model="username">
+        </div>
+        <div>
+            <input type="password" placeholder="Password" ng-model="password">
+        </div>
+        <div style="text-align: center;">
+            <button ng-click="login()" ng-disabled="isFormValid()">Login</button>
+        </div>
+    </div>
+</div>

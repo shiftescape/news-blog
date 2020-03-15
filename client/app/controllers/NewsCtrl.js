@@ -29,6 +29,7 @@ angular.module('myApp')
           $scope.initLoad = false;
         })
         .catch(function (err) {
+          $scope.isLoading = false;
           $scope.isErrorNews = true;
           console.error(err);
         });

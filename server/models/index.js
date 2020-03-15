@@ -1,6 +1,51 @@
 const { esclient, FIELDS } = require('../elastic');
 
 /**
+ * @function getUserByCreds
+ * @returns { results<Object>, values<Object> }
+ * @description Get user creds based on username and password
+ */
+async function getUserByCreds(username, password) {
+  const query = {
+    query: {
+      bool: {
+        must: [
+          {
+            match: {
+              username
+            }
+          },
+          {
+            match: {
+              password
+            }
+          }
+        ]
+      }
+    }
+  };
+
+  const { body: { hits } } = await esclient.search({
+    size: 1,
+    index: FIELDS.index,
+    body: query
+  });
+
+  const results = hits.total.value;
+
+  const values = hits.hits.map((hit) => {
+    return {
+      id: hit._id,
+      username: hit._source.username,
+      password: hit._source.password,
+      score: hit._score
+    }
+  });
+
+  return { results, values }
+}
+
+/**
  * @function getUser
  * @returns { results<Object>, values<Object> }
  * @description Get user data based on _id
@@ -49,6 +94,9 @@ async function getNews(req) {
         query: req.text || '',
         fields: ['title', 'content', 'created_by']
       }
+    },
+    sort: {
+      '_score': { 'order': 'desc' }
     }
   };
 
@@ -120,6 +168,7 @@ async function createNews(title, content, created_by) {
 }
 
 module.exports = {
+  getUserByCreds,
   getUser,
   createUser,
   getNews,

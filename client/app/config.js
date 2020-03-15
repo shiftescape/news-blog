@@ -1,16 +1,34 @@
 'use strict';
 
-angular.module('myApp')
+var app = angular.module('myApp')
   .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
 
-    $routeProvider.when('/news', {
-      templateUrl: './views/news/news.html',
-      controller: 'NewsCtrl'
-    })
-    .when('/news/create', {
-      templateUrl: './views/createNews/createNews.html',
-      controller: 'CreateNewsCtrl'
-    })
-    .otherwise({ redirectTo: '/news' });
+    $routeProvider
+      .when('/login', {
+        templateUrl: './views/login/login.html',
+        controller: 'LoginCtrl',
+        requireAuth: false
+      })
+      .when('/news', {
+        templateUrl: './views/news/news.html',
+        controller: 'NewsCtrl',
+        requireAuth: false
+      })
+      .when('/news/create', {
+        templateUrl: './views/createNews/createNews.html',
+        controller: 'CreateNewsCtrl',
+        requireAuth: true
+      })
+      .otherwise({ redirectTo: '/news' });
   }]);
+
+app.run(['$rootScope', '$location', 'AuthService', function ($rootScope, $location, AuthService) {
+  $rootScope.$on('$routeChangeStart', function (event, newUrl) {
+    if (AuthService.isLoggedIn() && newUrl.$$route.originalPath == '/login') {
+      $location.path('/news');
+    } else if (!AuthService.isLoggedIn() && newUrl.requireAuth) {
+      $location.path('/login');
+    }
+  });
+}]);

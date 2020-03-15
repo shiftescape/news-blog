@@ -5,6 +5,15 @@ html {
   background: #f9f9f9;
 }
 
+h2 {
+  color: #001627;
+}
+
+h2::before {
+  content: "| ";
+  color: orange;
+}
+
 header {
   background: #001627;
   text-align: center;
@@ -35,7 +44,7 @@ header {
   color: #ffffffbf;
 }
 
-#news-wrapper, #createnews-wrapper {
+#news-wrapper, #createnews-wrapper, #login-wrapper {
   width: 960px;
   margin: 0 auto;
   padding: 20px 0;
@@ -100,18 +109,97 @@ header {
 .dangerStyle {
   background: #e74c3c;
   color: #FFF;
-  padding: 8px 15px;
+  font-size: 0.9rem;
+  padding: 5px 10px;
   border: 1px solid #e43d2c;
 }
 
 .emptyStyle {
   background: #3498db;
   color: #FFF;
-  padding: 8px 15px;
+  font-size: 0.9rem;
+  padding: 5px 10px;
   border: 1px solid #208fda;
 }
 
 .loader {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+#createnews-wrapper .title {
+  padding: 5px 10px;
+  width: 100%;
+  outline: none;
+  border: 1px solid #DDD;
   margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#createnews-wrapper .content {
+  padding: 5px 10px;
+  width: 100%;
+  resize: none;
+  outline: none;
+  border: 1px solid #DDD;
+  height: 10em;
+  box-sizing: border-box;
+}
+
+#createnews-wrapper .action {
+  text-align: right;
+}
+
+#createnews-wrapper .action > button {
+  background: #2980b9;
+  border: 1px solid #2980b9;
+  color: #FFF;
+  padding: 5px 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+#createnews-wrapper .invalid-f {
+  background: #e74c3c;
+  color: #FFF;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+#createnews-wrapper .success-f {
+  background: #2ecc71;
+  color: #FFF;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+#login-wrapper #login-box {
+  width: 400px;
+  margin: 0 auto;
+  background: #FFF;
+  padding: 20px;
+}
+
+#login-wrapper #login-box h2 {
+  margin-top: 0;
+}
+
+#login-wrapper #login-box input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #DDD;
+  outline: none;
+}
+
+#login-wrapper #login-box button {
+  background: #3498db;
+  border: 1px solid #3498db;
+  color: #FFF;
+  outline: none;
+  padding: 5px 10px;
+  cursor: pointer;
 }

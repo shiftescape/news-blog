@@ -1,5 +1,23 @@
 const model = require("../models");
 
+async function loginUser(req, res) {
+  const body = req.body;
+  if (!body.username || !body.password) {
+    res.status(422).json({
+      error: true,
+      data: "Missing required parameter: 'username' or 'password"
+    });
+    return;
+  }
+  try {
+    const result = await model.getUserByCreds(body.username, body.password);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, error: "Unknown error." });
+  }
+}
+
 async function getUser(req, res) {
   const params = req.params;
   if (!params.id) {
@@ -76,6 +94,7 @@ async function createNews(req, res) {
   }
 }
 module.exports = {
+  loginUser,
   getUser,
   createUser,
   getNews,
