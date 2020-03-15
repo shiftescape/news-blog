@@ -4,8 +4,6 @@ services:
     image: node:carbon
     container_name: newsblog-client
     build: ./client
-    volumes:
-      - /Users/alvinb/Documents/projects/personal/news-blog/client/app:/usr/src/app
     ports:
       - 4200:4200
   api:
@@ -15,10 +13,10 @@ services:
     ports:
       - 3000:3000
     environment:
-     - NODE_ENV=local
-     - ES_HOST=elasticsearch
-     - NODE_PORT=3000
-     - ELASTIC_URL=http://elasticsearch:9200
+      - NODE_ENV=local
+      - ES_HOST=elasticsearch
+      - NODE_PORT=3000
+      - ELASTIC_URL=http://elasticsearch:9200
     volumes:
       - .:/usr/src/app/users
       - .:/usr/src/app/news
