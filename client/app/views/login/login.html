@@ -1,7 +1,7 @@
 <div id="login-wrapper">
     <div id="login-box">
         <h2>User Login</h2>
-        <div ng-if="unauthorized">Unauthorized access. Try again.</div>
+        <div ng-if="unauthorized" class="dangerStyle" style="margin-bottom: 10px; text-align: center;">Unauthorized access. Please try again.</div>
         <div>
             <input type="text" placeholder="Username" ng-model="username">
         </div>

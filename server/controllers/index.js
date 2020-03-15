@@ -67,6 +67,46 @@ async function getNews(req, res) {
   }
 }
 
+async function getNewsByID(req, res) {
+  try {
+    const result = await model.getNewsByID(req.params.id);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: "Unknown error." });
+  }
+}
+
+async function updateNewsByID(req, res) {
+  try {
+    await model.updateNewsByID(req.params.id, req.body.title, req.body.content);
+    res.json({ success: true, message: 'News successfully updated!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: "Unknown error." });
+  }
+}
+
+async function deleteNews(req, res) {
+  try {
+    await model.deleteNews(req.params.id);
+    res.json({ success: true, message: 'News successfully deleted!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: "Unknown error." });
+  }
+}
+
+async function getNewsByUserName(req, res) {
+  try {
+    const result = await model.getNewsByUserName(req.params.username);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: "Unknown error." });
+  }
+}
+
 async function createNews(req, res) {
   const body = req.body;
   if (!body.title || !body.content || !body.created_by) {
@@ -98,5 +138,9 @@ module.exports = {
   getUser,
   createUser,
   getNews,
+  getNewsByID,
+  updateNewsByID,
+  deleteNews,
+  getNewsByUserName,
   createNews
 };

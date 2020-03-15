@@ -135,6 +135,107 @@ async function getNews(req) {
 }
 
 /**
+ * @function getNewsByUserName
+ * @returns { results<Object>, values<Object> }
+ * @description Get all news or filtered one
+ */
+async function getNewsByUserName(username) {
+
+  let query = {
+    query: {
+      bool: {
+        must: [
+          {
+            match: {
+              created_by: username
+            }
+          }
+        ]
+      }
+    },
+    sort: {
+      created_at: { 'order': 'desc' }
+    }
+  };
+
+  const { body: { hits } } = await esclient.search({
+    index: FIELDS.index,
+    body: query
+  });
+
+  const results = hits.total.value;
+
+  const values = hits.hits.map((hit) => {
+    return {
+      id: hit._id,
+      title: hit._source.title,
+      content: hit._source.content,
+      created_by: hit._source.created_by,
+      created_at: hit._source.created_at,
+      score: hit._score
+    }
+  });
+
+  return { results, values }
+}
+
+/**
+ * @function getNewsByID
+ * @returns { results<Object>, values<Object> }
+ * @description Get all news by ID
+ */
+async function getNewsByID(id) {
+
+  const query = {
+    query: {
+      bool: {
+        must: {
+          term: { _id: id }
+        }
+      }
+    }
+  };
+
+  const { body: { hits } } = await esclient.search({
+    index: FIELDS.index,
+    body: query
+  });
+
+  const results = hits.total.value;
+
+  const values = hits.hits.map((hit) => {
+    return {
+      id: hit._id,
+      title: hit._source.title,
+      content: hit._source.content,
+      created_by: hit._source.created_by,
+      created_at: hit._source.created_at,
+      score: hit._score
+    }
+  });
+
+  return { results, values }
+}
+
+/**
+ * @function updateNewsByID
+ * @returns { esclient<ESObject> }
+ * @description Update specific news by ID
+ */
+async function updateNewsByID(id, title, content) {
+  return esclient.update({
+    id,
+    index: FIELDS.index,
+    refresh: true,
+    body: { 
+      doc: {
+        title, content
+      }
+    }
+  })
+}
+
+/**
  * @function createUser
  * @returns { esclient<ESObject> }
  * @description Create user data by username and password
@@ -167,10 +268,27 @@ async function createNews(title, content, created_by) {
   })
 }
 
+/**
+ * @function deleteNews
+ * @returns { esclient<ESObject> }
+ * @description Delete news by IDs
+ */
+async function deleteNews(id) {
+  return esclient.delete({
+    id,
+    index: FIELDS.index,
+    refresh: true
+  })
+}
+
 module.exports = {
   getUserByCreds,
   getUser,
   createUser,
   getNews,
-  createNews
+  getNewsByUserName,
+  getNewsByID,
+  updateNewsByID,
+  createNews,
+  deleteNews
 }

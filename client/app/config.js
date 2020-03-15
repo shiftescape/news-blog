@@ -16,8 +16,13 @@ var app = angular.module('myApp')
         requireAuth: false
       })
       .when('/news/create', {
-        templateUrl: './views/createNews/createNews.html',
+        templateUrl: './views/news/createNews.html',
         controller: 'CreateNewsCtrl',
+        requireAuth: true
+      })
+      .when('/news/:id/edit', {
+        templateUrl: './views/news/editNews.html',
+        controller: 'EditNewsCtrl',
         requireAuth: true
       })
       .otherwise({ redirectTo: '/news' });

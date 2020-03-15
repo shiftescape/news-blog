@@ -1,0 +1,13 @@
+<div id="editnews-wrapper">
+    <h2>Edit News</h2>
+    <div ng-show="isLoading" class="loader"><img src="../../assets/img/loader.gif" alt="Loading.."></div>
+    <div ng-show="successUpdate" class="success-f">News update successful!</div>
+    <div ng-show="invalidForm" class="invalid-f">Validation Error: News Title or Content cannot be empty. Please
+        complete the required fields below.</div>
+    <input type="text" class="titleText" placeholder="News Title..." ng-model="editTitle" ng-disabled="isLoading">
+    <br>
+    <textarea class="contentText" placeholder="News Content..." ng-model="editContent" ng-disabled="isLoading"></textarea>
+    <div class="action">
+        <button ng-click="updateNews()" ng-disabled="isLoading">Update News</button>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div id="createnews-wrapper">
+  <h2>Create News</h2>
+  <div ng-show="isLoading" class="loader"><img src="../../assets/img/loader.gif" alt="Loading.."></div>
+  <div ng-show="successCreate" class="success-f">News creation successful!</div>
+  <div ng-show="invalidForm" class="invalid-f">Validation Error: News Title or Content cannot be empty. Please complete the required fields below.</div>
+  <input type="text" class="titleText" placeholder="News Title..." ng-model="newsTitle" ng-disabled="isLoading">
+  <br>
+  <textarea class="contentText" placeholder="News Content..." ng-model="newsContent" ng-disabled="isLoading"></textarea>
+  <div class="action">
+    <button ng-click="createNews()" ng-disabled="isLoading">Create News</button>
+  </div>
+  <br>
+  <hr>
+  <h2>Your News List <span ng-if="listOwn > 0">({{listOwn}})</span></h2>
+  <div class="news-single" ng-repeat="news in userNews track by $index">
+    <div class="content-wrapper">
+      <div class="title" title="{{ news.title }}">{{ news.title }}</div>
+      <div class="created">Published: {{ parseDate(news.created_at) }}</div>
+      <div class="content">{{ news.content }}</div>
+      <div class="action">
+        <button class="btn-edit" ng-click="editNews(news.id)">Edit</button>
+        <button class="btn-delete" ng-click="deleteNews(news.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
